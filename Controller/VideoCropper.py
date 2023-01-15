@@ -2,7 +2,7 @@ from moviepy.editor import *
 from moviepy.video.fx.all import *
 from moviepy.video.fx.crop import crop
 
-from VideoEditor import VideoEditor
+from Controller.VideoEditor import VideoEditor
 
 
 class VideoCropper(VideoEditor):
@@ -20,15 +20,7 @@ class VideoCropper(VideoEditor):
     def crop(self) -> VideoClip:
         return crop(self.capture, x1=self.start_x, y1=0, x2=self.start_x + self.crop_width, y2=self.capture_height)
 
-    # Play video
-    def play(self) -> None:
-        self.capture.preview()
-
     # Play cropped video
     def play_crop(self) -> None:
         self.crop().preview()
 
-    # Save video
-    @staticmethod
-    def save(video: VideoClip, location: str) -> None:
-        video.write_videofile(location)
