@@ -1,9 +1,9 @@
-from Controller.VideoEditor import VideoEditor
+from Controller.Editor import Editor
 from moviepy.editor import VideoClip
 import os
 
 
-class VideoSlicer(VideoEditor):
+class Slicer(Editor):
     MIN_DURATION: int = 1.01
     MAX_PARTS: int = 5
 

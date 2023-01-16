@@ -2,10 +2,10 @@ from moviepy.editor import *
 from moviepy.video.fx.all import *
 from moviepy.video.fx.crop import crop
 
-from Controller.VideoEditor import VideoEditor
+from Controller.Editor import Editor
 
 
-class VideoCropper(VideoEditor):
+class Cropper(Editor):
     # Ratio portrait 9/16
     RATIO_WIDTH: int = 9
     RATIO_HEIGHT: int = 16

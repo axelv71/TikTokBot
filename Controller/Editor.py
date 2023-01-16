@@ -2,7 +2,7 @@ from moviepy.editor import VideoFileClip, VideoClip
 from abc import ABC
 
 
-class VideoEditor(ABC):
+class Editor(ABC):
     def __init__(self, video_path: str):
         self.capture: VideoFileClip = VideoFileClip(video_path)
 

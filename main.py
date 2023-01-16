@@ -1,16 +1,21 @@
-from Controller.VideoSlicer import VideoSlicer
-from Controller.VideoCropper import VideoCropper
+import os
+
+from Controller.Slicer import Slicer
+from Controller.Cropper import Cropper
 
 if __name__ == '__main__':
-    #video_path = './input/input.mp4'
+    video_path = './input/input.mp4'
 
-    #video_cropper = VideoCropper(video_path)
+    cropper = Cropper(video_path)
 
-    #video_cropper.save(video_cropper.crop(), "./output/cropped.mp4")
+    temp_path: str = f'./temp/{cropper.capture_name}.mp4'
 
+    cropper.save(cropper.crop(), temp_path)
 
-    video_slicer = VideoSlicer("./output/cropped.mp4")
+    slicer = Slicer(temp_path)
 
-    print(video_slicer.capture.duration)
+    print(slicer.capture.duration)
 
-    video_slicer.slice()
+    slicer.slice()
+
+    os.unlink(temp_path)
