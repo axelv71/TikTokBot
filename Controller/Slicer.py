@@ -4,7 +4,7 @@ import os
 
 
 class Slicer(Editor):
-    MIN_DURATION: int = 1.01
+    MIN_DURATION: int = 1.5
     MAX_PARTS: int = 5
 
     def __init__(self, input_video_path: str):
