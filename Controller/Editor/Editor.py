@@ -1,18 +1,17 @@
 from moviepy.editor import VideoFileClip, VideoClip
 from abc import ABC
 
+from Entity.VideoFile import VideoFile
+
 
 class Editor(ABC):
-    def __init__(self, video_path: str):
-        self.capture: VideoFileClip = VideoFileClip(video_path)
+    def __init__(self, video: VideoFile):
+        self.video: VideoFile = video
 
-        self.capture_width: int = self.capture.w
-        self.capture_height: int = self.capture.h
-        self.capture_name: str = self.capture.filename.split('/')[-1].split('.')[0]
 
     # Play video
     def play(self) -> None:
-        self.capture.preview()
+        self.video.video.preview()
 
     # Save video
     @staticmethod

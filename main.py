@@ -6,6 +6,7 @@ from Controller.Editor.Cropper import Cropper
 
 from Controller.Scrapper import Scrapper
 from Entity.Video import Video
+from Entity.VideoFile import VideoFile
 
 if __name__ == '__main__':
     # Scrapping
@@ -15,16 +16,18 @@ if __name__ == '__main__':
     # Download video
     downloader = Downloader(url=video.url, path='./input')
     downloader.download()
-    video_path: str = f'./input/{downloader.name}'
+    video_file = VideoFile(video=video, path=f'./input/{downloader.name}')
+
 
     # Crop video
-    cropper = Cropper(video_path)
-    temp_path: str = f'./temp/{cropper.capture_name}.mp4'
+    cropper = Cropper(video=video_file)
+    temp_path: str = f'./temp/{cropper.video.video_filename}.mp4'
     cropper.save(cropper.crop(), temp_path)
+    video_file = VideoFile(video=video, path=temp_path)
 
     # Slice video
-    slicer = Slicer(temp_path)
-    print(slicer.capture.duration)
+    slicer = Slicer(video_file)
+    print(slicer.video.video_duration)
     slicer.slice()
 
     # Delete temp file
