@@ -1,8 +1,7 @@
 from moviepy.editor import *
-from moviepy.video.fx.all import *
 from moviepy.video.fx.crop import crop
 
-from Controller.Editor import Editor
+from Controller.Editor.Editor import Editor
 
 
 class Cropper(Editor):

@@ -1,5 +1,4 @@
-from Controller.Editor import Editor
-from moviepy.editor import VideoClip
+from Controller.Editor.Editor import Editor
 import os
 
 

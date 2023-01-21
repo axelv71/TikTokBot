@@ -1,12 +1,19 @@
 import os
 
-from Controller.Slicer import Slicer
-from Controller.Cropper import Cropper
-from Controller.Downloader import Downloader
+from Controller.Downloader.Downloader import Downloader
+from Controller.Editor.Slicer import Slicer
+from Controller.Editor.Cropper import Cropper
+
+from Controller.Scrapper import Scrapper
+from Entity.Video import Video
 
 if __name__ == '__main__':
+    # Scrapping
+    scrapper: Scrapper = Scrapper(channel_url='https://www.youtube.com/@sciencetrash')
+    video: Video = scrapper.get_random_video(videos=scrapper.scrap_all_videos())
+
     # Download video
-    downloader = Downloader("https://www.youtube.com/watch?v=UqvqnL4IQ1g", './input')
+    downloader = Downloader(url=video.url, path='./input')
     downloader.download()
     video_path: str = f'./input/{downloader.name}'
 
