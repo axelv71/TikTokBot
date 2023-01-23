@@ -35,9 +35,6 @@ class Slicer(Editor):
 
             video_parts.append(VideoFile(video=self.video, video_file=self.video.video.subclip(start, end)))
 
-            # os.makedirs(f'./output/{self.video.video_filename}', exist_ok=True)
-            #self.save(self.video.video.subclip(start, end), f'./output/{self.video.video_filename}/{self.video.video_filename}_{i}.mp4')
-
         return video_parts
 
     def save_parts(self, video_parts: [VideoFile]) -> None:

@@ -7,11 +7,20 @@ from Controller.Editor.Cropper import Cropper
 from Controller.Scrapper import Scrapper
 from Entity.Video import Video
 from Entity.VideoFile import VideoFile
+from database.Database import Database
 
 if __name__ == '__main__':
+    # Initialize database
+    db: Database = Database()
+
     # Scrapping
     scrapper: Scrapper = Scrapper(channel_url='https://www.youtube.com/@sciencetrash')
     video: Video = scrapper.get_random_video(videos=scrapper.scrap_all_videos())
+
+    # If video is already in database, scrap another video
+    while db.get_video(video) is not None:
+        print(f'Video "{video.title}" already in database. Scraping another video...')
+        video = scrapper.get_random_video(videos=scrapper.scrap_all_videos())
 
     # Download video
     downloader = Downloader(url=video.url, path='./input')
@@ -28,10 +37,13 @@ if __name__ == '__main__':
     slicer = Slicer(video_file)
     video_parts: [VideoFile] = slicer.slice()
 
-    # Save slice text
+    # Save slice video
     for i in range(len(video_parts)):
         os.makedirs(f'./output/{video_parts[i].video_filename}', exist_ok=True)
         slicer.save(video_parts[i].video, f'./output/{slicer.video.video_filename}/{slicer.video.video_filename}_{i}.mp4')
+
+    # Insert video in database
+    db.insert_video(video)
 
     # Delete temp file
     os.unlink(temp_path)
