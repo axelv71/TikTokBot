@@ -18,17 +18,20 @@ if __name__ == '__main__':
     downloader.download()
     video_file = VideoFile(video=video, path=f'./input/{downloader.name}')
 
-
     # Crop video
     cropper = Cropper(video=video_file)
     temp_path: str = f'./temp/{cropper.video.video_filename}.mp4'
-    cropper.save(cropper.crop(), temp_path)
+    cropper.save(cropper.crop().video, temp_path)
     video_file = VideoFile(video=video, path=temp_path)
 
     # Slice video
     slicer = Slicer(video_file)
-    print(slicer.video.video_duration)
-    slicer.slice()
+    video_parts: [VideoFile] = slicer.slice()
+
+    # Save slice text
+    for i in range(len(video_parts)):
+        os.makedirs(f'./output/{video_parts[i].video_filename}', exist_ok=True)
+        slicer.save(video_parts[i].video, f'./output/{slicer.video.video_filename}/{slicer.video.video_filename}_{i}.mp4')
 
     # Delete temp file
     os.unlink(temp_path)

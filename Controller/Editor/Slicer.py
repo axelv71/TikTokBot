@@ -11,7 +11,7 @@ class Slicer(Editor):
     def __init__(self, video: VideoFile):
         super().__init__(video)
 
-    def slice(self) -> None:
+    def slice(self) -> [VideoFile]:
         parts = round(self.video.video_duration / self.MIN_DURATION)
 
         if parts > self.MAX_PARTS:
@@ -19,6 +19,7 @@ class Slicer(Editor):
 
         part_duration = round(self.video.video_duration / parts)
 
+        video_parts: [VideoFile] = []
         for i in range(parts):
             start = i * part_duration
             end = start + part_duration
@@ -32,6 +33,15 @@ class Slicer(Editor):
             print("End: " + str(end))
             print("duration: " + str(part_duration))
 
-            os.makedirs(f'./output/{self.video.video_filename}', exist_ok=True)
+            video_parts.append(VideoFile(video=self.video, video_file=self.video.video.subclip(start, end)))
 
-            self.save(self.video.video.subclip(start, end), f'./output/{self.video.video_filename}/{self.video.video_filename}_{i}.mp4')
+            # os.makedirs(f'./output/{self.video.video_filename}', exist_ok=True)
+            #self.save(self.video.video.subclip(start, end), f'./output/{self.video.video_filename}/{self.video.video_filename}_{i}.mp4')
+
+        return video_parts
+
+    def save_parts(self, video_parts: [VideoFile]) -> None:
+        for i in range(len(video_parts)):
+            os.makedirs(f'./output/{self.video.video_filename}', exist_ok=True)
+            self.save(video_parts[i].video, f'./output/{self.video.video_filename}/{self.video.video_filename}_{i}.mp4')
+
