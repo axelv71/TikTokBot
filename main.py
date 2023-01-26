@@ -1,8 +1,13 @@
 import os
 
+from moviepy.video.compositing.CompositeVideoClip import CompositeVideoClip
+from moviepy.video.io.VideoFileClip import VideoFileClip
+from pathlib import Path
+
 from Controller.Downloader.Downloader import Downloader
 from Controller.Editor.Slicer import Slicer
 from Controller.Editor.Cropper import Cropper
+from Controller.Editor.Stacker import Stacker
 
 from Controller.Scrapper import Scrapper
 from Entity.Video import Video
@@ -23,27 +28,32 @@ if __name__ == '__main__':
         video = scrapper.get_random_video(videos=scrapper.scrap_all_videos())
 
     # Download video
-    downloader = Downloader(url=video.url, path='./input')
-    downloader.download()
-    video_file = VideoFile(video=video, path=f'./input/{downloader.name}')
+    #downloader = Downloader(url=video.url, path='./input')
+    #downloader.download()
+    video_file = VideoFile(video=video, path=str(Path.cwd() / 'input' / 'input.mp4'))
 
     # Crop video
-    cropper = Cropper(video=video_file)
-    temp_path: str = f'./temp/{cropper.video.video_filename}.mp4'
-    cropper.save(cropper.crop().video, temp_path)
-    video_file = VideoFile(video=video, path=temp_path)
+    #cropper = Cropper(video=video_file)
+    #temp_path: str = str(Path.cwd() / 'temp' / f'{cropper.video.video_filename}_cropped.mp4')
+    #cropper.save(cropper.crop().video, temp_path)
+    #video_file = VideoFile(video=video, path=temp_path)
+
+    # Stack video
+    background = VideoFile(video=video, path=str(Path.cwd() / 'assets' / 'background.mp4'))
+    stacker = Stacker(video=video_file)
+    stacker.stack(background=background)
 
     # Slice video
-    slicer = Slicer(video_file)
-    video_parts: [VideoFile] = slicer.slice()
+    #slicer = Slicer(video_file)
+    #video_parts: [VideoFile] = slicer.slice()
 
     # Save slice video
-    for i in range(len(video_parts)):
-        os.makedirs(f'./output/{video_parts[i].video_filename}', exist_ok=True)
-        slicer.save(video_parts[i].video, f'./output/{slicer.video.video_filename}/{slicer.video.video_filename}_{i}.mp4')
+    #for i in range(len(video_parts)):
+    #    os.makedirs(f'./output/{video_parts[i].video_filename}', exist_ok=True)
+    #    slicer.save(video_parts[i].video, f'./output/{slicer.video.video_filename}/{slicer.video.video_filename}_{i}.mp4')
 
     # Insert video in database
-    db.insert_video(video)
+   # db.insert_video(video)
 
     # Delete temp file
-    os.unlink(temp_path)
+   # os.unlink(temp_path)

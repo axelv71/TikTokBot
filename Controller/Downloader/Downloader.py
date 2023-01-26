@@ -16,6 +16,7 @@ class Downloader:
         print(self.name)
         try:
             youtube.download(self.path, self.name)
+            # TODO: Progress bar
             print(f'Downloaded {self.name} successfully!')
         except:
             print("Error downloading video")

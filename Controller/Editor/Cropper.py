@@ -7,7 +7,7 @@ from Entity.VideoFile import VideoFile
 
 class Cropper(Editor):
     # Ratio portrait 9/16
-    RATIO_WIDTH: int = 12
+    RATIO_WIDTH: int = 9
     RATIO_HEIGHT: int = 16
 
     def __init__(self, video: VideoFile):
