@@ -1,13 +1,16 @@
-from pathlib import Path
+import os
 
-from Controller.Scrapper import Scrapper
-from Controller.Uploader import Uploader
-from Entity.Video import Video
-from Entity.VideoFile import VideoFile
+from Controller.Tiktok_uploader import uploadVideo
+from dotenv import load_dotenv
 
-scrapper: Scrapper = Scrapper(channel_url='https://www.youtube.com/@sciencetrash')
-video: Video = scrapper.get_random_video(videos=scrapper.scrap_all_videos())
+load_dotenv()
 
-video_file = VideoFile(video=video, path=str(Path.cwd() / 'input' / 'test.mp4'))
+session_id = str(os.getenv('TIKTOK_SESSION_ID'))
 
-uploader = Uploader(video_file)
+print(session_id)
+
+file = "/Users/axelvion/Developer/Python/TikTokBot/input/test.mp4"
+title =  "Test title"
+tags = ["Funny", "Joke", "fyp"]
+
+uploadVideo(session_id, file, title, tags, verbose=True)
