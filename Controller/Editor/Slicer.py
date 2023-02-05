@@ -1,12 +1,14 @@
 from Controller.Editor.Editor import Editor
 import os
-
+from dotenv import load_dotenv
 from Entity.VideoFile import VideoFile
+
+load_dotenv()
 
 
 class Slicer(Editor):
-    MIN_DURATION: int = 1.5
-    MAX_PARTS: int = 5
+    MIN_DURATION: int = int(os.getenv('SLICE_MIN_DURATION'))
+    MAX_PARTS: int = int(os.getenv('SLICE_MAX_PARTS'))
 
     def __init__(self, video: VideoFile):
         super().__init__(video)
@@ -41,4 +43,3 @@ class Slicer(Editor):
         for i in range(len(video_parts)):
             os.makedirs(f'./output/{self.video.video_filename}', exist_ok=True)
             self.save(video_parts[i].video, f'./output/{self.video.video_filename}/{self.video.video_filename}_{i}.mp4')
-

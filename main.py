@@ -52,7 +52,7 @@ if __name__ == '__main__':
         os.makedirs(f'./output/{video_parts[i].video_filename}', exist_ok=True)
         slicer.save(video_parts[i].video, f'./output/{slicer.video.video_filename}/{slicer.video.video_filename}_{i}.mp4')
 
-        time.sleep(30)
+        time.sleep(int(os.getenv('TIKTOK_UPLOAD_DELAY')))
         uploadVideo(session_id=session_id, video=f'./output/{slicer.video.video_filename}/{slicer.video.video_filename}_{i}.mp4', title=str(f'{video_parts[i].title} - Part {i + 1}'), tags=["Funny", "Joke", "monteuxcomedy", "fyp", "montreux", "comedy"])
 
     # Insert video in database
