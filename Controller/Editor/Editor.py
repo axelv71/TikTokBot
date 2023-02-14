@@ -15,5 +15,5 @@ class Editor(ABC):
 
     # Save video
     @staticmethod
-    def save(video: VideoClip, location: str) -> None:
-        video.write_videofile(location)
+    def save(video: VideoFileClip, location: str) -> None:
+        video.write_videofile(location, audio_codec='aac', codec='libx264')

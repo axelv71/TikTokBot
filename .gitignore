@@ -5,3 +5,4 @@ __pycache__/
 db.sqlite
 *.mp3
 *.mp4
+.env
