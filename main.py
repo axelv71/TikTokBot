@@ -24,7 +24,7 @@ if __name__ == '__main__':
     db: Database = Database()
 
     # Scrapping
-    scrapper: Scrapper = Scrapper(channel_url='https://www.youtube.com/@MontreuxComedy')
+    scrapper: Scrapper = Scrapper(channel_url='')
     video: Video = scrapper.get_random_video(videos=scrapper.scrap_all_videos())
 
     # If video is already in database, scrap another video
